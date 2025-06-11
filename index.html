@@ -131,7 +131,9 @@
               name: `${index}.png`,
               dataURI: canvas.toDataURL()
             });
-          }
+          };
+
+          frameDiv.textContent = `Frames processed. Please wait...`;
       
           console.log(imageArr);
         };
