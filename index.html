@@ -123,10 +123,10 @@
           a.target = '_blank';
           const frames = ~~(video.duration * rateInput.valueAsNumber);
           for (let index = 0; index < frames; index++) {
-            //seek = defer();
+            seek = defer();
             frameInput.value = index;
             frameInput.dispatchEvent(new Event('input'));
-            //await seek.promise;
+            await seek.promise;
             imageArr.push({
               name: `${index}.png`,
               dataURI: canvas.toDataURL()
