@@ -1,4 +1,13 @@
-import defer from 'https://tomashubelbauer.github.io/esm-defer/index.js';
+function defer() {
+  let resolve;
+  let reject;
+  const promise = new Promise((_resolve, _reject) => {
+    resolve = _resolve;
+    reject = _reject;
+  });
+
+  return { resolve, reject, promise };
+}
 
 window.addEventListener('load', () => {
   const fileInput = document.querySelector('input[type="file"]');
@@ -62,6 +71,8 @@ window.addEventListener('load', () => {
   });
 
   button.addEventListener('click', async () => {
+    const imageArr = [];
+    
     rateInput.disabled = '';
     frameInput.disabled = '';
     button.disabled = true;
@@ -75,10 +86,13 @@ window.addEventListener('load', () => {
       frameInput.value = index;
       frameInput.dispatchEvent(new Event('input'));
       await seek.promise;
-      a.download = `${index}.png`;
-      a.href = canvas.toDataURL();
-      a.click();
+      imageArr.push({
+        name: `${index}.png`,
+        dataURI: canvas.toDataURL()
+      });
     }
+
+    console.log(imageArr);
   });
 
   if (fileInput.value) {
