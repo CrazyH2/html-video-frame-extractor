@@ -81,7 +81,7 @@
         rateInput.addEventListener('change', () => {
           const frames = ~~(video.duration * rateInput.valueAsNumber);
           frameInput.max = frames - 1;
-          frameDiv.textContent = `Frame ${frameInput.value + 1}/${frames}`;
+          frameDiv.textContent = `Frame ${frameInput.valueAsNumber + 1}/${frames}`;
         });
       
         frameInput.addEventListener('input', () => {
