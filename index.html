@@ -28,10 +28,6 @@
       input[type="range"] {
         width: calc(100vw - 20px);
       }
-      
-      button {
-        display: block;
-      }
     </style>
   </head>
   <body>
@@ -46,8 +42,7 @@
     </div>
     <div id="frameDiv"></div>
     <input type="range" disabled style="display: none;"/>
-    <button disabled>Download all frames one by one</button>
-
+    
     <script>
       function defer() {
         let resolve;
@@ -69,7 +64,6 @@
         const dimensionDiv = document.querySelector('#dimensionDiv');
         const durationDiv = document.querySelector('#durationDiv');
         const frameDiv = document.querySelector('#frameDiv');
-        const button = document.querySelector('button');
       
         fileInput.addEventListener('change', () => {
           if (fileInput.files.length === 0) {
@@ -90,7 +84,6 @@
           const frames = ~~(video.duration * rateInput.valueAsNumber);
           frameInput.max = frames - 1;
           frameDiv.textContent = `Frame ${frameInput.value + 1}/${frames}`;
-          button.textContent = `Download all ${frames} frames one by one`;
         });
       
         frameInput.addEventListener('input', () => {
@@ -109,7 +102,7 @@
           rateInput.dispatchEvent(new Event('change'));
           frameInput.removeAttribute('disabled');
           frameInput.focus();
-          button.disabled = false;
+          onFrames();
         });
       
         let seek;
@@ -121,12 +114,11 @@
           seek?.resolve();
         });
       
-        button.addEventListener('click', async () => {
+        const onFrames = async () => {
           const imageArr = [];
           
           rateInput.disabled = '';
           frameInput.disabled = '';
-          button.disabled = true;
           frameInput.disabled = '';
       
           const a = document.createElement('a');
@@ -149,7 +141,7 @@
         if (fileInput.value) {
           fileInput.dispatchEvent(new Event('change'));
         }
-      });
+      };
     </script>
   </body>
 </html>
